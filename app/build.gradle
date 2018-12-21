@@ -61,13 +61,13 @@ dependencies {
     implementation rootProject.ext.dependencies["rxbinding"]
     implementation rootProject.ext.dependencies["rxpermissions"]
 
-    //di
+//    //di
     implementation rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
-    implementation rootProject.ext.dependencies["dagger-android"]
-    implementation rootProject.ext.dependencies["dagger-android-support"]
-    annotationProcessor rootProject.ext.dependencies["dagger-android-processor"]
-    implementation rootProject.ext.dependencies["javax_annotation"]
+//    implementation rootProject.ext.dependencies["dagger-android"]
+//    implementation rootProject.ext.dependencies["dagger-android-support"]
+//    annotationProcessor rootProject.ext.dependencies["dagger-android-processor"]
+//    implementation rootProject.ext.dependencies["javax_annotation"]
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
 
