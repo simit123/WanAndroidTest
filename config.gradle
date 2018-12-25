@@ -65,6 +65,18 @@ ext{
             "butterknife"                       : "com.jakewharton:butterknife:${version["butterknifeVersion"]}",
             "butterknife-compiler"              : "com.jakewharton:butterknife-compiler:${version["butterknifeVersion"]}",
 
+            //other
+            "lottie"                            : "com.airbnb.android:lottie:2.5.5",
+            "BaseRecyclerViewAdapterHelper"     : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34",
+            "fragmentation"                     : "me.yokeyword:fragmentation:${version["fragmentationVersion"]}",
+            "fragmentation-swipeback"           : "me.yokeyword:fragmentation-swipeback:${version["fragmentationVersion"]}",
+            "crashreport_upgrade"               : "com.tencent.bugly:crashreport_upgrade:latest.release",
+            "logger"                            : "com.orhanobut:logger:2.1.1",
+            "ByeBurger"                         : "com.github.githubwing:ByeBurger:1.2.3",
+            "stetho"                            : "com.facebook.stetho:stetho:1.5.0",
+            "stetho-okhttp3"                    : "com.facebook.stetho:stetho-okhttp3:1.4.2",
+            "PersistentCookieJar"               : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
+
     ]
 
 }
