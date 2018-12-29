@@ -3,6 +3,7 @@ package wanandroid.com.wanandroidtest.net;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.internal.fuseable.HasUpstreamObservableSource;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -12,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.PUT;
 import wanandroid.com.wanandroidtest.api.ApiService;
 
 /**
@@ -21,6 +23,8 @@ import wanandroid.com.wanandroidtest.api.ApiService;
 public class RetrofitManager {
     private RetrofitManager() {
     }
+
+   public static final String HOST = "http://www.wanandroid.com/";
 
     private static Retrofit retrofit = null;
     private static OkHttpClient okHttpClient = null;
@@ -53,7 +57,7 @@ public class RetrofitManager {
                             .build();
                     //获取Retrofit 实例
                     retrofit = new Retrofit.Builder()
-                            .baseUrl("https://www.baidu.com/")
+                            .baseUrl(HOST)
                             .client(okHttpClient)
                             .addConverterFactory(GsonConverterFactory.create())
                             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

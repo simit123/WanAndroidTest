@@ -2,6 +2,7 @@ package wanandroid.com.wanandroidtest.ui.activity;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -19,8 +20,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.header.storehouse.StoreHouseBarItem;
+
 import butterknife.BindView;
 import wanandroid.com.wanandroidtest.R;
+import wanandroid.com.wanandroidtest.app.MyApplication;
 import wanandroid.com.wanandroidtest.base.BaseActivity;
 import wanandroid.com.wanandroidtest.ui.fragment.KnowledgeHierarchyFragment;
 import wanandroid.com.wanandroidtest.ui.fragment.MainPagerFragment;
@@ -29,6 +33,7 @@ import wanandroid.com.wanandroidtest.ui.fragment.ProjectFragment;
 import wanandroid.com.wanandroidtest.ui.fragment.WxArticleFragment;
 import wanandroid.com.wanandroidtest.utils.BottomNavigationViewHelper;
 import wanandroid.com.wanandroidtest.utils.CommonUtils;
+import wanandroid.com.wanandroidtest.utils.Preferences;
 import wanandroid.com.wanandroidtest.utils.StatusBarUtil;
 
 public class MainActivity extends BaseActivity {
@@ -54,6 +59,7 @@ public class MainActivity extends BaseActivity {
     private WxArticleFragment mWxArticleFragment = null;
     private NavigationFragment mNavigationFragment = null;
     private ProjectFragment mProjectFragment = null;
+    private TextView loginView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,7 @@ public class MainActivity extends BaseActivity {
         initDrawerLayout();
         setIndex(bottomNavigationView.getSelectedItemId());
         switchFragment(index);
+        initNavigationView();
     }
 
     @Override
@@ -185,6 +192,7 @@ public class MainActivity extends BaseActivity {
                     mMainPagerFragment = MainPagerFragment.getInstance(getString(R.string.home_pager));
                     fs.add(R.id.fragment_group, mMainPagerFragment, getString(R.string.home_pager));
                 }
+                commonToolbarTitleTv.setText(getString(R.string.home_pager));
                 break;
             case 1:
                 if (mKnowledgeHierarchyFragment != null) {
@@ -193,6 +201,7 @@ public class MainActivity extends BaseActivity {
                     mKnowledgeHierarchyFragment = KnowledgeHierarchyFragment.getInstance(getString(R.string.knowledge_hierarchy));
                     fs.add(R.id.fragment_group, mKnowledgeHierarchyFragment, getString(R.string.knowledge_hierarchy));
                 }
+                commonToolbarTitleTv.setText(getString(R.string.knowledge_hierarchy));
                 break;
             case 2:
                 if (mWxArticleFragment != null) {
@@ -201,6 +210,7 @@ public class MainActivity extends BaseActivity {
                     mWxArticleFragment = WxArticleFragment.getInstance(getString(R.string.wx_article));
                     fs.add(R.id.fragment_group, mWxArticleFragment, getString(R.string.wx_article));
                 }
+                commonToolbarTitleTv.setText(getString(R.string.wx_article));
                 break;
             case 3:
                 if (mNavigationFragment != null) {
@@ -209,6 +219,7 @@ public class MainActivity extends BaseActivity {
                     mNavigationFragment = NavigationFragment.getInstance(getString(R.string.navigation));
                     fs.add(R.id.fragment_group, mNavigationFragment, getString(R.string.navigation));
                 }
+                commonToolbarTitleTv.setText(getString(R.string.navigation));
                 break;
             case 4:
                 if (mProjectFragment != null) {
@@ -217,6 +228,7 @@ public class MainActivity extends BaseActivity {
                     mProjectFragment = ProjectFragment.getInstance(getString(R.string.project));
                     fs.add(R.id.fragment_group, mProjectFragment, getString(R.string.project));
                 }
+                commonToolbarTitleTv.setText(getString(R.string.project));
                 break;
             default:
                 break;
@@ -277,5 +289,82 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 设置抽屉布局
+     */
+    private void initNavigationView(){
+        loginView = navView.getHeaderView(0).findViewById(R.id.nav_header_login_tv);
+        if (Preferences.getInstance().getLoginStatus()) {
+            showLoginView();
+        }else {
+            showLogoutView();
+        }
+
+        navView.getMenu().findItem(R.id.nav_item_wan_android)
+                .setOnMenuItemClickListener(item -> {
+//                    startMainPager();
+                    CommonUtils.showMessage(this,"回到主页面");
+                    return true;
+                });
+        navView.getMenu().findItem(R.id.nav_item_my_collect)
+                .setOnMenuItemClickListener(item -> {
+                    if (Preferences.getInstance().getLoginStatus()) {
+//                        startCollectFragment();
+                        CommonUtils.showMessage(this,"收藏");
+                        return true;
+                    } else {
+//                        startActivity(new Intent(this, LoginActivity.class));
+                        CommonUtils.showMessage(this, getString(R.string.login_tint));
+                        return true;
+                    }
+                });
+        navView.getMenu().findItem(R.id.nav_item_about_us)
+                .setOnMenuItemClickListener(item -> {
+//                    startActivity(new Intent(this, AboutUsActivity.class));
+                    CommonUtils.showMessage(this,"关于我们");
+                    return true;
+                });
+        navView.getMenu().findItem(R.id.nav_item_logout)
+                .setOnMenuItemClickListener(item -> {
+//                    logout();
+                    CommonUtils.showMessage(this,"退出登录");
+                    return true;
+                });
+        navView.getMenu().findItem(R.id.nav_item_setting)
+                .setOnMenuItemClickListener(item -> {
+//                    startSettingFragment();
+                    CommonUtils.showMessage(this,"设置");
+                    return true;
+                });
+
+    }
+
+    /**
+     * 展示登录完成的UI 显示用户名
+     */
+    private void showLoginView(){
+        if (navView == null) {
+            return;
+        }
+        loginView.setText(Preferences.getInstance().getAccount());
+        loginView.setOnClickListener(null);
+        navView.getMenu().getItem(R.id.nav_item_logout).setVisible(true);
+    }
+
+    /**
+     * 展示未登录的UI
+     */
+    private void showLogoutView(){
+        loginView.setText(getString(R.string.login_in));
+        loginView.setOnClickListener(v -> {
+            // TODO: 2018/12/26 跳转注册页面
+            Intent intent = new Intent(this,RegisterActivity.class);
+            startActivity(intent);
+        });
+        if (navView == null) {
+            return;
+        }
+        navView.getMenu().findItem(R.id.nav_item_logout).setVisible(false);
+    }
 
 }
