@@ -18,5 +18,12 @@ public interface ApiService {
 
     @POST("user/register")
     @FormUrlEncoded//请求正文使用表单网址编码
-    Observable<LoginData> registerUser(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
+    Observable<LoginData> registerUser(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);;
+
+    @POST("user/login")
+    @FormUrlEncoded
+    Observable<LoginData> login(@Field("username") String username, @Field("password") String password);
+
+
+
 }

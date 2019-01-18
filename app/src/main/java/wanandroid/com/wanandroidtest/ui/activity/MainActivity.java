@@ -348,7 +348,7 @@ public class MainActivity extends BaseActivity {
         }
         loginView.setText(Preferences.getInstance().getAccount());
         loginView.setOnClickListener(null);
-        navView.getMenu().getItem(R.id.nav_item_logout).setVisible(true);
+        navView.getMenu().findItem(R.id.nav_item_logout).setVisible(true);
     }
 
     /**
@@ -357,8 +357,8 @@ public class MainActivity extends BaseActivity {
     private void showLogoutView(){
         loginView.setText(getString(R.string.login_in));
         loginView.setOnClickListener(v -> {
-            // TODO: 2018/12/26 跳转注册页面
-            Intent intent = new Intent(this,RegisterActivity.class);
+            // TODO: 2018/12/26 跳转登录
+            Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
         });
         if (navView == null) {

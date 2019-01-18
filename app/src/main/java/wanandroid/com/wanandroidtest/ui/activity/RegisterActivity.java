@@ -1,6 +1,7 @@
 package wanandroid.com.wanandroidtest.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -129,6 +130,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.R
     @Override
     public void showRegisterSuccess() {
         CommonUtils.showMessage(this, "注册成功");
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override
