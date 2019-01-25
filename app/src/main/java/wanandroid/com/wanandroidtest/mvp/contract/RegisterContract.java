@@ -7,6 +7,9 @@ import wanandroid.com.wanandroidtest.base.IBaseView;
  * 修改番号 INLS-NEW-201811-002 修改简介 wuy 2018/12/29 ADD
  */
 
+/**
+ * 定义View展示接口和presenter请求接口
+ */
 public class RegisterContract {
 
 
