@@ -12,6 +12,7 @@ import wanandroid.com.wanandroidtest.mvp.model.bean.BannerData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.BaseResponse1;
 import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleListData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.HomeDataBean;
+import wanandroid.com.wanandroidtest.mvp.model.bean.KnowledgeHierarchyData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.LoginData;
 
 
@@ -40,7 +41,6 @@ public interface ApiService {
     @GET("article/list/{num}/json")
     Observable<BaseResponse1<FeedArticleListData>> getFeedArticleList(@Path("num") int num);
 
-
     /**
      * 广告栏
      * http://www.wanandroid.com/banner/json
@@ -49,5 +49,15 @@ public interface ApiService {
      */
     @GET("banner/json")
     Observable<BaseResponse1<List<BannerData>>> getBannerData();
+
+
+    /**
+     * 知识体系
+     * http://www.wanandroid.com/tree/json
+     *
+     * @return 知识体系数据
+     */
+    @GET("tree/json")
+    Observable<BaseResponse1<List<KnowledgeHierarchyData>>> getKnowledgeHierarchyData();
 
 }

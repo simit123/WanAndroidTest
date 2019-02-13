@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import java.io.LineNumberInputStream;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import wanandroid.com.wanandroidtest.base.BasePresenter;
@@ -51,5 +52,4 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView> imple
                 });
         addSubscription(disposable);
     }
-
 }

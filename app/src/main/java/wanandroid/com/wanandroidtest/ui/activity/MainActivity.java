@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +24,14 @@ import android.widget.Toast;
 import com.scwang.smartrefresh.header.storehouse.StoreHouseBarItem;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
 import wanandroid.com.wanandroidtest.R;
 import wanandroid.com.wanandroidtest.app.MyApplication;
 import wanandroid.com.wanandroidtest.base.BaseActivity;
+import wanandroid.com.wanandroidtest.scheduler.SchedulerUtils;
 import wanandroid.com.wanandroidtest.ui.fragment.KnowledgeHierarchyFragment;
 import wanandroid.com.wanandroidtest.ui.fragment.MainPagerFragment;
 import wanandroid.com.wanandroidtest.ui.fragment.NavigationFragment;
@@ -72,6 +78,20 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onViewCreated() {
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Observable.just("")
+                        .compose(SchedulerUtils.ioToMain())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+                                Log.i("currentThread","currentThread =  accept >>>> "+Thread.currentThread().getName());
+                            }
+                        });
+                Log.i("currentThread","currentThread"+Thread.currentThread().getName());
+            }
+        }).start();
     }
 
     @Override

@@ -4,10 +4,24 @@
     android:layout_height="match_parent"
     tools:context="wanandroid.com.wanandroidtest.ui.fragment.KnowledgeHierarchyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/normal_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="知识体系" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/knowledge_hierarchy_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:background="@color/colorBackground"
+            android:visibility="visible" />
+
+
+        <com.scwang.smartrefresh.header.DropBoxHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </FrameLayout>
