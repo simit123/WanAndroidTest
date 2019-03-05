@@ -16,6 +16,7 @@ import io.reactivex.disposables.Disposable;
 import wanandroid.com.wanandroidtest.R;
 import wanandroid.com.wanandroidtest.app.MyApplication;
 import wanandroid.com.wanandroidtest.base.BaseActivity;
+import wanandroid.com.wanandroidtest.base.BasePresenter;
 import wanandroid.com.wanandroidtest.utils.StatusBarUtil;
 
 public class SplashActivity extends BaseActivity {

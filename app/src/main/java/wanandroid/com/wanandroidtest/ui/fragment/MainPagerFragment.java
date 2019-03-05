@@ -67,9 +67,9 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
 
     @Override
     public void initView() {
+        initRecyclerView();
         mainPagerPresenter = new MainPagerPresenter();
         mainPagerPresenter.attachView(this);
-        initRecyclerView();
         mainPagerPresenter.loadMainData(0);
 
     }
@@ -99,6 +99,7 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
     public void dismissLoading() {
 
     }
+
 
     @Override
     public void showBanner(List<BannerData> bannerData) {

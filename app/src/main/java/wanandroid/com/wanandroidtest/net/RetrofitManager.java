@@ -31,7 +31,7 @@ public class RetrofitManager {
 
     public static ApiService service = getRetrofit().create(ApiService.class);
 
-    public static Retrofit getRetrofit() {
+    private static Retrofit getRetrofit() {
         if (retrofit == null) {
             synchronized (RetrofitManager.class) {
                 if (retrofit == null) {

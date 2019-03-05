@@ -53,8 +53,8 @@ public class KnowledgeHierarchyFragment extends BaseFragment implements Knowledg
         knowledgePresenter.attachView(this);
         knowledgePresenter.getKnowledge();
 
-
     }
+
 
     @Override
     public void showLoading() {

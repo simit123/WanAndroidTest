@@ -3,9 +3,13 @@ package wanandroid.com.wanandroidtest.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.just.agentweb.LogUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import wanandroid.com.wanandroidtest.mvp.contract.MainPagerContract;
 import wanandroid.com.wanandroidtest.utils.ActivityCollector;
 
 /**
@@ -16,7 +20,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity{
 
 
     private Unbinder unBinder;
-
+    private static final String TAG = "AbstractBaseActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +31,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity{
         onViewCreated();
         initToolbar();
         initData();
+        Log.i("life",TAG);
     }
 
     @Override

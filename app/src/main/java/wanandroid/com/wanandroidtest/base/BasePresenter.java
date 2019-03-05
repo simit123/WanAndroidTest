@@ -4,6 +4,8 @@ import io.reactivex.disposables.Disposable;
 
 /**
  *  presenter的基类 用于处理 View 没有attach 可能造成的空指针异常 和 Rxjava 数据流调用过程中导致内存泄漏 （一种情况是 网络请求过程中 Activity由于某种情况而被销毁，rxjava的订阅没有得到及时的释放）
+ *
+ *  管理订阅事件的生命周期
  */
 public class BasePresenter<T extends IBaseView> implements IBasePresenter<T> {
 

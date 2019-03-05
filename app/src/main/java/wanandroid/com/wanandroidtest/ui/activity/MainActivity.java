@@ -1,12 +1,15 @@
 package wanandroid.com.wanandroidtest.ui.activity;
 
 
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.just.agentweb.LogUtils;
 import com.scwang.smartrefresh.header.storehouse.StoreHouseBarItem;
 
 import butterknife.BindView;
@@ -31,6 +35,7 @@ import io.reactivex.functions.Consumer;
 import wanandroid.com.wanandroidtest.R;
 import wanandroid.com.wanandroidtest.app.MyApplication;
 import wanandroid.com.wanandroidtest.base.BaseActivity;
+import wanandroid.com.wanandroidtest.base.BasePresenter;
 import wanandroid.com.wanandroidtest.scheduler.SchedulerUtils;
 import wanandroid.com.wanandroidtest.ui.fragment.KnowledgeHierarchyFragment;
 import wanandroid.com.wanandroidtest.ui.fragment.MainPagerFragment;
@@ -66,6 +71,7 @@ public class MainActivity extends BaseActivity {
     private NavigationFragment mNavigationFragment = null;
     private ProjectFragment mProjectFragment = null;
     private TextView loginView;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,7 @@ public class MainActivity extends BaseActivity {
             index = savedInstanceState.getInt("currTabIndex");
         }
         super.onCreate(savedInstanceState);
+        Log.i("life",TAG);
     }
 
     @Override
@@ -153,6 +160,10 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_usage:
                 CommonUtils.showMessage(this, "常用网站");
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(this,R.anim.push_left_in,R.anim.push_left_out);
+                ActivityCompat.startActivity(this,new Intent(this,UsageActivity.class),optionsCompat.toBundle());
+
+
                 break;
             case R.id.action_search:
                 CommonUtils.showMessage(this, "搜索");

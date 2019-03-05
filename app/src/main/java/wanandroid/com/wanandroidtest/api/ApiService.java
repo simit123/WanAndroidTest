@@ -14,6 +14,9 @@ import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleListData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.HomeDataBean;
 import wanandroid.com.wanandroidtest.mvp.model.bean.KnowledgeHierarchyData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.LoginData;
+import wanandroid.com.wanandroidtest.mvp.model.bean.NavigationListData;
+import wanandroid.com.wanandroidtest.mvp.model.bean.UsefulSiteData;
+import wanandroid.com.wanandroidtest.mvp.model.bean.WxAuthor;
 
 
 public interface ApiService {
@@ -59,5 +62,35 @@ public interface ApiService {
      */
     @GET("tree/json")
     Observable<BaseResponse1<List<KnowledgeHierarchyData>>> getKnowledgeHierarchyData();
+
+    /**
+     * 获取公众号列表
+     * http://wanandroid.com/wxarticle/chapters/json
+     *
+     * @return 公众号列表数据
+     */
+    @GET("wxarticle/chapters/json")
+    Observable<BaseResponse1<List<WxAuthor>>> getWxAuthorListData();
+
+    /**
+     * 常用网站
+     * http://www.wanandroid.com/friend/json
+     *
+     * @return 常用网站数据
+     */
+    @GET("friend/json")
+    Observable<BaseResponse1<List<UsefulSiteData>>> getUsefulSites();
+
+    /**
+     * 导航
+     * http://www.wanandroid.com/navi/json
+     *
+     * @return 导航数据
+     */
+    @GET("navi/json")
+    Observable<BaseResponse1<List<NavigationListData>>> getNavigationListData();
+
+
+
 
 }
