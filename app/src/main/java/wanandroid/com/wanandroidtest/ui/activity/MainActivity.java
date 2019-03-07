@@ -254,7 +254,7 @@ public class MainActivity extends BaseActivity {
                 break;
             case 4:
                 if (mProjectFragment != null) {
-                    fs.show(mNavigationFragment);
+                    fs.show(mProjectFragment);
                 } else {
                     mProjectFragment = ProjectFragment.getInstance(getString(R.string.project));
                     fs.add(R.id.fragment_group, mProjectFragment, getString(R.string.project));

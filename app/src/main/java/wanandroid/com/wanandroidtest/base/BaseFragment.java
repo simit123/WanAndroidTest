@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 
 /**
@@ -50,7 +51,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView{
 
     @Override
     public void showError(String err) {
-
+        CommonUtils.showMessage(getActivity(),err);
     }
 
     @Override

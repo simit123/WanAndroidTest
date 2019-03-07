@@ -7,6 +7,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 import wanandroid.com.wanandroidtest.mvp.model.bean.BannerData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.BaseResponse1;
@@ -15,6 +16,8 @@ import wanandroid.com.wanandroidtest.mvp.model.bean.HomeDataBean;
 import wanandroid.com.wanandroidtest.mvp.model.bean.KnowledgeHierarchyData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.LoginData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.NavigationListData;
+import wanandroid.com.wanandroidtest.mvp.model.bean.ProjectClassifyData;
+import wanandroid.com.wanandroidtest.mvp.model.bean.ProjectListData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.UsefulSiteData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.WxAuthor;
 
@@ -90,6 +93,25 @@ public interface ApiService {
     @GET("navi/json")
     Observable<BaseResponse1<List<NavigationListData>>> getNavigationListData();
 
+    /**
+     * 项目分类
+     * http://www.wanandroid.com/project/tree/json
+     *
+     * @return 项目分类数据
+     */
+    @GET("project/tree/json")
+    Observable<BaseResponse1<List<ProjectClassifyData>>> getProjectClassifyData();
+
+    /**
+     * 项目类别数据
+     * http://www.wanandroid.com/project/list/1/json?cid=294
+     *
+     * @param page page num
+     * @param cid second page id
+     * @return 项目类别数据
+     */
+    @GET("project/list/{page}/json")
+    Observable<BaseResponse1<ProjectListData>> getProjectListData(@Path("page") int page, @Query("cid") int cid);
 
 
 
