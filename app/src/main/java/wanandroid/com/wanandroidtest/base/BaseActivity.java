@@ -6,6 +6,10 @@ import android.util.Log;
 
 import com.just.agentweb.LogUtils;
 
+import wanandroid.com.wanandroidtest.R;
+import wanandroid.com.wanandroidtest.app.Constants;
+import wanandroid.com.wanandroidtest.ui.activity.MainActivity;
+import wanandroid.com.wanandroidtest.utils.ActivityCollector;
 import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 /**
@@ -18,7 +22,7 @@ public abstract class BaseActivity extends AbstractBaseActivity implements IBase
         CommonUtils.showMessage(this, message);
     }
 
-
+    private long clickTime;
 
     private static final String TAG = "BaseActivity";
 
@@ -53,4 +57,19 @@ public abstract class BaseActivity extends AbstractBaseActivity implements IBase
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (this instanceof MainActivity) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - clickTime > Constants.DOUBLE_INTERVAL_TIME) {
+                CommonUtils.showMessage(this, getString(R.string.double_click_exit_tint));
+                clickTime = System.currentTimeMillis();
+            }else {
+                ActivityCollector.getInstance().exitApp();
+            }
+        }else {
+            finish();
+        }
+    }
 }

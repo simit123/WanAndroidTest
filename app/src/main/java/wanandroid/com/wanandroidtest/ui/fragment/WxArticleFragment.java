@@ -66,7 +66,7 @@ public class WxArticleFragment extends BaseFragment implements WxAuthorContract.
     public void showAuthorData(List<WxAuthor> data) {
         mFragments.clear();
         for (WxAuthor wxAuthor : data){
-            mFragments.add(WxArticleDetailFragment.getInstance(wxAuthor.getName()));
+            mFragments.add(WxArticleDetailFragment.getInstance(wxAuthor.getName(),wxAuthor.getId()));
         }
         initTableAndViewPager(data);
     }

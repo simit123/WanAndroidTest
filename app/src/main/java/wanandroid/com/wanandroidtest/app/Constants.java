@@ -21,6 +21,7 @@ public class Constants {
      */
    public static final String LOGIN_STATUS = "LOGIN_STATUS";
    public static final String ACCOUNT = "ACCOUNT";
+   public static final int DOUBLE_INTERVAL_TIME = 2000;
 
     /**
      * Tab colors

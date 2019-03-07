@@ -113,6 +113,15 @@ public interface ApiService {
     @GET("project/list/{page}/json")
     Observable<BaseResponse1<ProjectListData>> getProjectListData(@Path("page") int page, @Query("cid") int cid);
 
-
+    /**
+     * 获取当前公众号某页的数据
+     * http://wanandroid.com/wxarticle/list/405/1/json
+     *
+     * @param id
+     * @param page
+     * @return 获取当前公众号某页的数据
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    Observable<BaseResponse1<FeedArticleListData>> getWxSumData(@Path("id") int id, @Path("page") int page);
 
 }
