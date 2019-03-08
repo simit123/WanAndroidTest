@@ -24,6 +24,7 @@ import wanandroid.com.wanandroidtest.base.BaseFragment;
 import wanandroid.com.wanandroidtest.mvp.contract.WxAuthorContract;
 import wanandroid.com.wanandroidtest.mvp.model.bean.WxAuthor;
 import wanandroid.com.wanandroidtest.mvp.presenter.WxAuthorPresent;
+import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +60,9 @@ public class WxArticleFragment extends BaseFragment implements WxAuthorContract.
         wxAuthorPresent = new WxAuthorPresent();
         wxAuthorPresent.attachView(this);
         wxAuthorPresent.getAuthorData();
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
     }
 
 
@@ -69,6 +73,7 @@ public class WxArticleFragment extends BaseFragment implements WxAuthorContract.
             mFragments.add(WxArticleDetailFragment.getInstance(wxAuthor.getName(),wxAuthor.getId()));
         }
         initTableAndViewPager(data);
+        showNormal();
     }
 
     @Override

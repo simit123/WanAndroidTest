@@ -21,6 +21,7 @@ import wanandroid.com.wanandroidtest.base.BaseFragment;
 import wanandroid.com.wanandroidtest.mvp.contract.WXDetailContract;
 import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleData;
 import wanandroid.com.wanandroidtest.mvp.presenter.WXDetailPresenter;
+import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 
 public class WxArticleDetailFragment extends BaseFragment implements WXDetailContract.IwxDetailV{
@@ -64,6 +65,9 @@ public class WxArticleDetailFragment extends BaseFragment implements WXDetailCon
         Bundle bundle = getArguments();
         int id = bundle.getInt("id");
         mPresenter.getWXDetailData(id,0);
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
         initRecyclerView();
     }
 
@@ -76,6 +80,7 @@ public class WxArticleDetailFragment extends BaseFragment implements WXDetailCon
     @Override
     public void showDetailData(List<FeedArticleData> data) {
             articleListAdapter.addData(data);
+            showNormal();
     }
 
     private void initRecyclerView(){

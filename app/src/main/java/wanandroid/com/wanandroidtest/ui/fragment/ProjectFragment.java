@@ -24,6 +24,7 @@ import wanandroid.com.wanandroidtest.base.BaseFragment;
 import wanandroid.com.wanandroidtest.mvp.contract.ProjectContract;
 import wanandroid.com.wanandroidtest.mvp.model.bean.ProjectClassifyData;
 import wanandroid.com.wanandroidtest.mvp.presenter.ProjectPresenter;
+import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,6 +61,9 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.IPr
         projectPresenter = new ProjectPresenter();
         projectPresenter.attachView(this);
         projectPresenter.getProjectData();
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
 
     }
 
@@ -93,5 +97,6 @@ public class ProjectFragment extends BaseFragment implements ProjectContract.IPr
     @Override
     public void showProjectData(List<ProjectClassifyData> data) {
         initViewPager(data);
+        showNormal();
     }
 }

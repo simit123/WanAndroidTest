@@ -72,4 +72,14 @@ public abstract class BaseActivity extends AbstractBaseActivity implements IBase
             finish();
         }
     }
+
+    @Override
+    public void showLoadError() {
+
+    }
+
+    @Override
+    public void showNormal() {
+
+    }
 }

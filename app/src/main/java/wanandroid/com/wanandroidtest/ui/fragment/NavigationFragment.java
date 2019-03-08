@@ -29,6 +29,7 @@ import wanandroid.com.wanandroidtest.base.BaseFragment;
 import wanandroid.com.wanandroidtest.mvp.contract.NavigationContract;
 import wanandroid.com.wanandroidtest.mvp.model.bean.NavigationListData;
 import wanandroid.com.wanandroidtest.mvp.presenter.NavigationPresenter;
+import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,8 +68,12 @@ public class NavigationFragment extends BaseFragment implements NavigationContra
         mNavigationPresenter = new NavigationPresenter();
         mNavigationPresenter.attachView(this);
         mNavigationPresenter.getNavigationData();
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
 //        normalView.setVisibility(View.VISIBLE);
         initRecyclerView();
+
     }
 
     @Override
@@ -93,6 +98,7 @@ public class NavigationFragment extends BaseFragment implements NavigationContra
             }
         });
         mNavigationAdapter.replaceData(data);
+        showNormal();
     }
 
     private void initRecyclerView() {

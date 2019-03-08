@@ -71,6 +71,9 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
         mainPagerPresenter = new MainPagerPresenter();
         mainPagerPresenter.attachView(this);
         mainPagerPresenter.loadMainData(0);
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
 
     }
 
@@ -90,15 +93,6 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
         }
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void dismissLoading() {
-
-    }
 
 
     @Override
@@ -110,6 +104,7 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
     public void showArticleList(FeedArticleListData feedArticleListData) {
         articleData = feedArticleListData.getDatas();
         mAdapter.replaceData(articleData);
+        showNormal();
     }
 
 

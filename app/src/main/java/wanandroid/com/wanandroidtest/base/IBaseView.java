@@ -9,4 +9,6 @@ public interface IBaseView {
     void dismissLoading();
     void showError(String err);
     void reLoad();
+    void showLoadError();
+    void showNormal();
 }

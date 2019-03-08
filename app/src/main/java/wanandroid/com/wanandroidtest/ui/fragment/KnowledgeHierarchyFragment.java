@@ -22,6 +22,7 @@ import wanandroid.com.wanandroidtest.base.BaseFragment;
 import wanandroid.com.wanandroidtest.mvp.contract.KnowledgeHierarchyContract;
 import wanandroid.com.wanandroidtest.mvp.model.bean.KnowledgeHierarchyData;
 import wanandroid.com.wanandroidtest.mvp.presenter.KnowledgePresenter;
+import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,19 +53,12 @@ public class KnowledgeHierarchyFragment extends BaseFragment implements Knowledg
         knowledgePresenter = new KnowledgePresenter();
         knowledgePresenter.attachView(this);
         knowledgePresenter.getKnowledge();
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
 
     }
 
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void dismissLoading() {
-
-    }
 
     @Override
     public void showSuccess(List<KnowledgeHierarchyData> data) {
@@ -90,5 +84,6 @@ public class KnowledgeHierarchyFragment extends BaseFragment implements Knowledg
         knowledgeHierarchyRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         knowledgeHierarchyRecyclerView.setHasFixedSize(true);
         knowledgeHierarchyRecyclerView.setAdapter(knowledgeHierarchyAdapter);
+        showNormal();
     }
 }

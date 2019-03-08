@@ -22,6 +22,7 @@ import wanandroid.com.wanandroidtest.mvp.contract.ProjectListContract;
 import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.ProjectListData;
 import wanandroid.com.wanandroidtest.mvp.presenter.ProjectListPresenter;
+import wanandroid.com.wanandroidtest.utils.CommonUtils;
 
 public class ProjectListFragment extends BaseFragment implements ProjectListContract.IProjectListV {
 
@@ -60,6 +61,9 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
         Bundle bundle = getArguments();
         int cid = bundle.getInt("cid");
         mPresenter.getData(0, cid);
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
         initRecyclerView();
 
     }
@@ -68,6 +72,7 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
     public void showProjectListData(ProjectListData mData) {
         List<FeedArticleData> datas = mData.getDatas();
         mAdapter.addData(datas);
+        showNormal();
     }
 
     private void initRecyclerView(){
