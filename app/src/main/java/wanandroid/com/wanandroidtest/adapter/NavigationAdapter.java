@@ -1,5 +1,6 @@
 package wanandroid.com.wanandroidtest.adapter;
 
+import android.app.ActivityOptions;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import wanandroid.com.wanandroidtest.R;
 import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.NavigationListData;
 import wanandroid.com.wanandroidtest.utils.CommonUtils;
+import wanandroid.com.wanandroidtest.utils.JudgeUtils;
 
 /**
  * 修改番号 INLS-NEW-201811-002 修改简介 wuy 2019/3/5 ADD
@@ -47,15 +49,32 @@ public class NavigationAdapter extends BaseQuickAdapter<NavigationListData,Navig
                 tv.setPadding(CommonUtils.dp2px(10),CommonUtils.dp2px(10),CommonUtils.dp2px(10),CommonUtils.dp2px(10));
                 tv.setTextColor(CommonUtils.randomColor());
                 tv.setText(name);
-                tagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-                    @Override
-                    public boolean onTagClick(View view, int position, FlowLayout parent) {
-                        return false;
-                    }
-                });
-
                 return tv;
             }
         });
+        tagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                startNavigation(view,parent,position,item.getArticles());
+                return true;
+            }
+        });
     }
+
+    private void startNavigation(View view, FlowLayout parent2, int position,List<FeedArticleData> feedArticleDatas){
+        ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view,
+                view.getWidth() / 2,
+                view.getHeight() / 2,
+                0 ,
+                0);
+        JudgeUtils.startArticleDetailActivity(parent2.getContext(),
+                options,
+                feedArticleDatas.get(position).getId(),
+                feedArticleDatas.get(position).getTitle(),
+                feedArticleDatas.get(position).getLink(),
+                feedArticleDatas.get(position).isCollect(),
+                false,
+                false);
+    }
+
 }

@@ -17,11 +17,12 @@ public class MainPagerContract {
     public interface IView extends IBaseView {
         void showBanner(List<BannerData> bannerData);
 
-        void showArticleList(FeedArticleListData feedArticleListData);
+        void showArticleList(FeedArticleListData feedArticleListData,boolean isRefresh);
     }
 
     public interface IPresenter extends IBasePresenter<IView> {
         void loadMainData(int i);
+        void loadMoreData();
     }
 
 }

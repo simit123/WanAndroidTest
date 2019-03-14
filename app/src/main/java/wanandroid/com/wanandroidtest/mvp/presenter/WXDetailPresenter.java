@@ -6,6 +6,7 @@ import wanandroid.com.wanandroidtest.mvp.contract.WXDetailContract;
 import wanandroid.com.wanandroidtest.mvp.model.WXDetailModel;
 import wanandroid.com.wanandroidtest.mvp.model.bean.BaseResponse1;
 import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleListData;
+import wanandroid.com.wanandroidtest.net.BaseObserver;
 import wanandroid.com.wanandroidtest.utils.StringUtils;
 
 /**
@@ -17,20 +18,31 @@ public class WXDetailPresenter extends BasePresenter<WXDetailContract.IwxDetailV
     @Override
     public void getWXDetailData(int id, int page) {
         checkViewAttach();
-       addSubscription(WXDetailModel.getWXDetailData(id,page).subscribe(new Consumer<BaseResponse1<FeedArticleListData>>() {
-           @Override
-           public void accept(BaseResponse1<FeedArticleListData> baseData) throws Exception {
-               if (baseData != null) {
-                   if (!StringUtils.isNull(baseData.getData())) {
-                       mRootViw.showDetailData(baseData.getData().getDatas());
+       addSubscription(WXDetailModel.getWXDetailData(id,page)
+               .subscribeWith(new BaseObserver<BaseResponse1<FeedArticleListData>>(mRootViw) {
+                   @Override
+                   public void onNext(BaseResponse1<FeedArticleListData> baseData) {
+                       if (baseData != null) {
+                           if (!StringUtils.isNull(baseData.getData())) {
+                               mRootViw.showDetailData(baseData.getData().getDatas());
+                           }
+                       }
                    }
-               }
-           }
-       }, new Consumer<Throwable>() {
-           @Override
-           public void accept(Throwable throwable) throws Exception {
-                mRootViw.showError(throwable.getMessage());
-           }
-       }));
+               }));
+//               .subscribe(new Consumer<BaseResponse1<FeedArticleListData>>() {
+//           @Override
+//           public void accept(BaseResponse1<FeedArticleListData> baseData) throws Exception {
+//               if (baseData != null) {
+//                   if (!StringUtils.isNull(baseData.getData())) {
+//                       mRootViw.showDetailData(baseData.getData().getDatas());
+//                   }
+//               }
+//           }
+//       }, new Consumer<Throwable>() {
+//           @Override
+//           public void accept(Throwable throwable) throws Exception {
+//                mRootViw.showError(throwable.getMessage());
+//           }
+//       }));
     }
 }

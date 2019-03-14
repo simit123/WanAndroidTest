@@ -1,16 +1,23 @@
 package wanandroid.com.wanandroidtest.ui.fragment;
 
 
+import android.app.ActivityOptions;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.just.agentweb.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -33,6 +40,7 @@ import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleListData;
 import wanandroid.com.wanandroidtest.mvp.presenter.MainPagerPresenter;
 import wanandroid.com.wanandroidtest.utils.CommonUtils;
 import wanandroid.com.wanandroidtest.utils.GlideImageLoad;
+import wanandroid.com.wanandroidtest.utils.JudgeUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +75,7 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
 
     @Override
     public void initView() {
+        setRefresh();
         initRecyclerView();
         mainPagerPresenter = new MainPagerPresenter();
         mainPagerPresenter.attachView(this);
@@ -74,6 +83,7 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
         if (CommonUtils.isNetworkConnected()) {
             showLoading();
         }
+
 
     }
 
@@ -94,16 +104,25 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
     }
 
 
-
     @Override
     public void showBanner(List<BannerData> bannerData) {
         initBanner(bannerData);
     }
 
     @Override
-    public void showArticleList(FeedArticleListData feedArticleListData) {
-        articleData = feedArticleListData.getDatas();
-        mAdapter.replaceData(articleData);
+    public void showArticleList(FeedArticleListData feedArticleListData, boolean isRefresh) {
+
+        if (isRefresh) {
+//            articleData.addAll(feedArticleListData.getDatas());
+            mAdapter.addData(feedArticleListData.getDatas());
+            Log.i("isRefresh", "刷新-----");
+        } else {
+            Log.i("isRefresh", "刷新-----非");
+
+//            articleData = feedArticleListData.getDatas();
+            mAdapter.replaceData(feedArticleListData.getDatas());
+        }
+
         showNormal();
     }
 
@@ -119,6 +138,9 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
         inflate.removeView(banner);
         mAdapter.addHeaderView(banner);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            startDetailPage(view,position);
+        });
     }
 
     private void initBanner(List<BannerData> bannerData) {
@@ -149,9 +171,32 @@ public class MainPagerFragment extends BaseFragment implements MainPagerContract
         banner.setIndicatorGravity(BannerConfig.CENTER);
 
         banner.setOnBannerListener(position -> {
-            CommonUtils.showMessage(getActivity(),"点击banner");
+            CommonUtils.showMessage(getActivity(), "点击banner");
         });
 
         banner.start();
+    }
+
+    private void setRefresh() {
+        normalView.setOnLoadMoreListener(refreshLayout -> {
+            mRecyclerView.stopScroll();
+            mainPagerPresenter.loadMoreData();
+            refreshLayout.finishLoadMore(1000);
+        });
+    }
+
+    private void startDetailPage(View view,int position){
+        if (mAdapter.getData().size() < 0 || mAdapter.getData().size() < position) {
+            return;
+        }
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, getString(R.string.share_view));
+        JudgeUtils.startArticleDetailActivity(getActivity(),
+                options,
+                mAdapter.getData().get(position).getId(),
+                mAdapter.getData().get(position).getTitle(),
+                mAdapter.getData().get(position).getLink(),
+                mAdapter.getData().get(position).isCollect(),
+                false,
+                false);
     }
 }

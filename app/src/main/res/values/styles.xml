@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -25,17 +26,16 @@
     </style>
 
     <!--<style name="windowAnimation">-->
-        <!--<item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>-->
-        <!--<item name="android:activityOpenExitAnimation">@anim/push_left_out</item>-->
-        <!--<item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>-->
-        <!--<item name="android:activityCloseExitAnimation">@anim/push_right_out</item>-->
+    <!--<item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>-->
+    <!--<item name="android:activityOpenExitAnimation">@anim/push_left_out</item>-->
+    <!--<item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>-->
+    <!--<item name="android:activityCloseExitAnimation">@anim/push_right_out</item>-->
     <!--</style>-->
 
 
-
     <!--<style name="popup_window_animation">-->
-        <!--<item name="android:windowEnterAnimation">@anim/popup_window_enter</item>-->
-        <!--<item name="android:windowExitAnimation">@anim/popup_window_exit</item>-->
+    <!--<item name="android:windowEnterAnimation">@anim/popup_window_enter</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/popup_window_exit</item>-->
     <!--</style>-->
 
 

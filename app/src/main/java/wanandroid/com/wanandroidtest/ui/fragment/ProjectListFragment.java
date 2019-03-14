@@ -1,5 +1,6 @@
 package wanandroid.com.wanandroidtest.ui.fragment;
 
+import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleData;
 import wanandroid.com.wanandroidtest.mvp.model.bean.ProjectListData;
 import wanandroid.com.wanandroidtest.mvp.presenter.ProjectListPresenter;
 import wanandroid.com.wanandroidtest.utils.CommonUtils;
+import wanandroid.com.wanandroidtest.utils.JudgeUtils;
 
 public class ProjectListFragment extends BaseFragment implements ProjectListContract.IProjectListV {
 
@@ -81,5 +84,23 @@ public class ProjectListFragment extends BaseFragment implements ProjectListCont
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            startDetailPage(view,position);
+        });
+    }
+
+    private void startDetailPage(View view,int position){
+        if (mAdapter.getData().size() < 0 || mAdapter.getData().size() < position) {
+            return;
+        }
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, getString(R.string.share_view));
+        JudgeUtils.startArticleDetailActivity(getActivity(),
+                options,
+                mAdapter.getData().get(position).getId(),
+                mAdapter.getData().get(position).getTitle(),
+                mAdapter.getData().get(position).getLink(),
+                mAdapter.getData().get(position).isCollect(),
+                false,
+                false);
     }
 }

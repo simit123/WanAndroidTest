@@ -10,6 +10,7 @@ import wanandroid.com.wanandroidtest.mvp.contract.NavigationContract;
 import wanandroid.com.wanandroidtest.mvp.model.NavigationModel;
 import wanandroid.com.wanandroidtest.mvp.model.bean.BaseResponse1;
 import wanandroid.com.wanandroidtest.mvp.model.bean.NavigationListData;
+import wanandroid.com.wanandroidtest.net.BaseObserver;
 import wanandroid.com.wanandroidtest.utils.StringUtils;
 
 /**
@@ -21,20 +22,38 @@ public class NavigationPresenter extends BasePresenter<NavigationContract.INavig
     @Override
     public void getNavigationData() {
         checkViewAttach();
-        addSubscription(NavigationModel.getNavigationData().subscribe(new Consumer<BaseResponse1<List<NavigationListData>>>() {
-            @Override
-            public void accept(BaseResponse1<List<NavigationListData>> dataList) throws Exception {
-                if (dataList != null) {
-                    if (!StringUtils.isNull(dataList.getData())) {
-                        mRootViw.showNavigationData(dataList.getData());
+        addSubscription(NavigationModel.getNavigationData()
+                .subscribeWith(new BaseObserver<BaseResponse1<List<NavigationListData>>>(mRootViw) {
+                    @Override
+                    public void onNext(BaseResponse1<List<NavigationListData>> dataList) {
+                        if (dataList != null) {
+                            if (!StringUtils.isNull(dataList.getData())) {
+                                mRootViw.showNavigationData(dataList.getData());
+                            }
+                        }
                     }
-                }
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                mRootViw.showError(throwable.getMessage());
-            }
-        }));
+                }));
+
+
+
+
+
+
+
+//                .subscribe(new Consumer<BaseResponse1<List<NavigationListData>>>() {
+//            @Override
+//            public void accept(BaseResponse1<List<NavigationListData>> dataList) throws Exception {
+//                if (dataList != null) {
+//                    if (!StringUtils.isNull(dataList.getData())) {
+//                        mRootViw.showNavigationData(dataList.getData());
+//                    }
+//                }
+//            }
+//        }, new Consumer<Throwable>() {
+//            @Override
+//            public void accept(Throwable throwable) throws Exception {
+//                mRootViw.showError(throwable.getMessage());
+//            }
+//        }));
     }
 }

@@ -25,7 +25,11 @@
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.UsageActivity"></activity>
+        <activity android:name=".ui.activity.UsageActivity" />
+        <activity
+            android:name=".ui.activity.ArticleDetailActivity"
+            android:label="@string/title_activity_article_detail"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

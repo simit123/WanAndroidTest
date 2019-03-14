@@ -1,13 +1,16 @@
 package wanandroid.com.wanandroidtest.ui.fragment;
 
+import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import wanandroid.com.wanandroidtest.mvp.contract.WXDetailContract;
 import wanandroid.com.wanandroidtest.mvp.model.bean.FeedArticleData;
 import wanandroid.com.wanandroidtest.mvp.presenter.WXDetailPresenter;
 import wanandroid.com.wanandroidtest.utils.CommonUtils;
+import wanandroid.com.wanandroidtest.utils.JudgeUtils;
 
 
 public class WxArticleDetailFragment extends BaseFragment implements WXDetailContract.IwxDetailV{
@@ -89,6 +93,23 @@ public class WxArticleDetailFragment extends BaseFragment implements WXDetailCon
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(articleListAdapter);
+        articleListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            startDetailPage(view,position);
+        });
+    }
 
+    private void startDetailPage(View view, int position){
+        if (articleListAdapter.getData().size() < 0 || articleListAdapter.getData().size() < position) {
+            return;
+        }
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, getString(R.string.share_view));
+        JudgeUtils.startArticleDetailActivity(getActivity(),
+                options,
+                articleListAdapter.getData().get(position).getId(),
+                articleListAdapter.getData().get(position).getTitle(),
+                articleListAdapter.getData().get(position).getLink(),
+                articleListAdapter.getData().get(position).isCollect(),
+                false,
+                false);
     }
 }

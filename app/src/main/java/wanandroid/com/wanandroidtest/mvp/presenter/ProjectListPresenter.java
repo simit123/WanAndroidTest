@@ -6,6 +6,7 @@ import wanandroid.com.wanandroidtest.mvp.contract.ProjectListContract;
 import wanandroid.com.wanandroidtest.mvp.model.ProjectListModel;
 import wanandroid.com.wanandroidtest.mvp.model.bean.BaseResponse1;
 import wanandroid.com.wanandroidtest.mvp.model.bean.ProjectListData;
+import wanandroid.com.wanandroidtest.net.BaseObserver;
 import wanandroid.com.wanandroidtest.utils.StringUtils;
 
 /**
@@ -18,20 +19,35 @@ public class ProjectListPresenter extends BasePresenter<ProjectListContract.IPro
     @Override
     public void getData(int page, int cid) {
         checkViewAttach();
-        addSubscription(ProjectListModel.getProjectListData(page,cid).subscribe(new Consumer<BaseResponse1<ProjectListData>>() {
-            @Override
-            public void accept(BaseResponse1<ProjectListData> mBaseData) throws Exception {
-                if (mBaseData != null) {
-                    if (!StringUtils.isNull(mBaseData.getData())) {
-                        mRootViw.showProjectListData(mBaseData.getData());
+        addSubscription(ProjectListModel.getProjectListData(page,cid)
+                .subscribeWith(new BaseObserver<BaseResponse1<ProjectListData>>(mRootViw) {
+                    @Override
+                    public void onNext(BaseResponse1<ProjectListData> mBaseData) {
+                        if (mBaseData != null) {
+                            if (!StringUtils.isNull(mBaseData.getData())) {
+                                mRootViw.showProjectListData(mBaseData.getData());
+                            }
+                        }
                     }
-                }
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                mRootViw.showError(throwable.getMessage());
-            }
-        }));
+                }));
+
+
+
+
+//                .subscribe(new Consumer<BaseResponse1<ProjectListData>>() {
+//            @Override
+//            public void accept(BaseResponse1<ProjectListData> mBaseData) throws Exception {
+//                if (mBaseData != null) {
+//                    if (!StringUtils.isNull(mBaseData.getData())) {
+//                        mRootViw.showProjectListData(mBaseData.getData());
+//                    }
+//                }
+//            }
+//        }, new Consumer<Throwable>() {
+//            @Override
+//            public void accept(Throwable throwable) throws Exception {
+//                mRootViw.showError(throwable.getMessage());
+//            }
+//        }));
     }
 }

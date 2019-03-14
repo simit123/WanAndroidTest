@@ -108,7 +108,8 @@ public class NavigationFragment extends BaseFragment implements NavigationContra
         navigationRecyclerView.setLayoutManager(mManager);
         navigationRecyclerView.setHasFixedSize(true);
         navigationRecyclerView.setAdapter(mNavigationAdapter);
-        rightFlowLeft();
+        rightFlowLeft();//搞懂左右联动的逻辑
+
     }
 
     private void rightFlowLeft(){
